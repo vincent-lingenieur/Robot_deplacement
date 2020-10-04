@@ -22,19 +22,19 @@ const double DIAMETERWHEELZ = 19;       //Distance entre mes deux roues (MESURÉ
 const double CIRCUMFERENCEWHEELZ = DIAMETERWHEELZ*PI;
 const uint8_t MOTOR2ID = 0;
 const uint8_t MOTOR1ID = 1;
-const int nb_mvmt = 6;
+const int nb_mvmt = 11;
 //----------------------------------------------------------------------------------------------------------------------------//
 
 //--------------------------------------------Initialisation de variables globales--------------------------------------------//
 //Variables Globales
-float MotorSpeedInput = 0.5;
+float MotorSpeedInput = 0.3;
 int32_t ReadEncodeur2 = 0;
 int32_t ReadEncodeur1 = 0;
 int i = 0; //valeur pour la boucle du main
 //0 = valeur de distance (en cm) et 1 valeur de rotation ( en degrées par rapport au centre avant du robot)
 double mvmt_matrix[2][nb_mvmt] = {
-  {0,1,0,1,0,1},
-  {50,45,25,-45,70,90}
+  {0,1,0,1,0,1,0,1,0,1,0},
+  {122,-90,90,90,97,45,195,-90,57,45,104}
 };
 //Matrice utilisée pour stocker le prochain mouvement (en ticks de rotation)
 double traveldistance[2][2] = {
