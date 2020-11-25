@@ -1,7 +1,10 @@
 #include <Arduino.h>
 #include <LibRobus.h>
-//#include "Micro.cpp"
+#include <Fonctions.h>
 //0=moteur de gauche et 1=moteur de droite
+
+#define Servo1 1
+
 void setup()
 {
   // put your setup code here, to run once:
@@ -104,6 +107,12 @@ void tourner(int sens, float angle)
   }
 }
 
+void brasbouge()
+{
+  activerServo(Servo1, 116);
+  activerServo(Servo1, 125);
+}
+
 void ligneDroite(float distance)
 {
   //Pour aller en ligne droite sur une distance déterminée en mètre
@@ -129,18 +138,20 @@ void ligneDroite(float distance)
 
   MOTOR_SetSpeed(1, speedright);
   MOTOR_SetSpeed(0, speedleft);
+
   while (distancep < borne)
   {
+    brasbouge();
     nbcycle++;
-    delay(200);
     float valeur_voulue = ENCODER_ReadReset(0);
     float valeur_reel = ENCODER_ReadReset(1);
     distancep += valeur_reel;
     errorp = valeur_voulue - valeur_reel;
     errori = ((nbcycle * valeur_voulue) - distancep);
     adjust = (errorp * kp) + (errori * ki);
-    MOTOR_SetSpeed(1, (speedright + adjust));
+    MOTOR_SetSpeed(1, (speedright + adjust));   
   }
+
   MOTOR_SetSpeed(0, 0.20);
   MOTOR_SetSpeed(1, 0.20);
   delay(50);
@@ -153,6 +164,7 @@ void ligneDroite(float distance)
   ENCODER_Reset(0);
   ENCODER_Reset(1);
 }
+
 // appeler whelle pour instaurer la dominance.
 void whelle(int temps)
 {
@@ -171,8 +183,8 @@ void whelle(int temps)
 // 0 = virage vers la gauche. 1 = virage vers la droite.
 void courbe(float angle, float rayon, int sens)
 {
-  float kp = 0.000;
-  float ki = 0.0000;
+  float kp = 0.00055;
+  float ki = 0.00003;
   float errorp;
   float errori;
   float speedright = 0.15;
@@ -194,10 +206,10 @@ void courbe(float angle, float rayon, int sens)
   }
   while (distance < ((distancedroite*13367)/100))
   {
+    brasbouge();
     MOTOR_SetSpeed(1, (distancedroite / distancegauche) * speedright);
     nbcycle++;
     MOTOR_SetSpeed(0, speedleft);
-    delay(50);
     float valeur_voulue = ((distancedroite / distancegauche) * ENCODER_Read(0));
     float valeur_reel = ENCODER_Read(1);
     distance += valeur_reel;
@@ -224,50 +236,64 @@ void loop()
 {
   //VARIABLE
   // put your main code here, to run repeatedly:
- 
+
   //FONCTION POUR LA LETTRE L
-    /*ligneDroite(0.25);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    ligneDroite(0.45);
     delay(100);
     tournerParEnArriere(1,-80);
     delay(100);
-    ligneDroite(0.20);
+    ligneDroite(0.30);
     delay(200000);*/
 
   //FONCTION POUR LA LETTRE C
-    /*virage(1, 90);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    virage(1, 90);
     delay(100);
-    courbe(180, 10, 0);
-    delay(1000000000);*/
+    courbe(240, 10, 0);
+    delay(10000);*/
   
 
   //FONCTION POUR LA LETTRE U
-    /*ligneDroite(0.15);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    ligneDroite(0.40);
     delay(100);
     courbe(180, 10, 0);
     delay(100);
-    ligneDroite(0.15);
-    delay(1000000000);*/
+    ligneDroite(0.40);
+    delay(10000);*/
 
     //FONCTION POUR LA LETTRE 0
-    /*courbe(360, 10, 0);
-    delay(1000000000);*/
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    courbe(390, 10, 0);
+    delay(10000);*/
 
     //FONCTION POUR LA LETTRE D
-    /*ligneDroite(0.55);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    ligneDroite(0.55);
     delay(100);
     tournerParEnArriere(1,-80);
     delay(100);
-    courbe(178, 10, 0);
-    delay(1000000000);*/
+    courbe(210, 10, 0);
+    delay(10000);*/
 
     //FONCTION POUR LA LETTRE J
-    /*ligneDroite(0.15);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    ligneDroite(0.55);
     delay(100);
-    courbe(180, 10, 0);
-    delay(1000000000);*/
+    courbe(210, 5, 0);
+    delay(10000);*/
 
     //FONCTION POUR LA LETTRE z
-    /*virage(0, 90);
+    /*activerServo(Servo1, 125);
+    delay(1000);
+    virage(0, 90);
     delay(100);
     ligneDroite(0.20);
     delay(100);
@@ -278,9 +304,11 @@ void loop()
     tournerParEnArriere(1, -115);
     delay(100);
     ligneDroite(0.20);
-    delay(1000000000);*/
+    delay(10000);*/
 
      //FONCTION POUR LA LETTRE V
+   /*activerServo(Servo1, 125);
+    delay(1000); 
     virage(0, 30);
     delay(100);
     ligneDroite(0.35);
@@ -288,5 +316,6 @@ void loop()
     tournerParEnArriere(1, -120);
     delay(100);
     ligneDroite(0.35);
-    delay(1000000000);
+    delay(1000000000);*/
+
 }
