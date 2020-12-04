@@ -439,11 +439,15 @@ void deplacer (char charByte)
       nbLettre++;
       if (nbLettre < 2)
       {
-       //code
+      tourner(1,80);
+      Avancer(0.355);
+      tourner(1,80);
       }
       else
       {
-        //code
+      tourner(1,80);
+      Avancer(0.10);
+      tourner(1,80);
       }
       break;
 
