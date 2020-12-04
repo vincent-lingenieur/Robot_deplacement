@@ -6,7 +6,8 @@
 #define Servo1 1
 bool dessin;
 String incomingByte = "";
-// const char charByte = incomingByte[0];
+
+int nbLettre = 0;
 
 
 void setup()
@@ -84,7 +85,7 @@ void tourner(int sens, float angle)
   delay(100);
 } 
 
-  void tournerParEnArriere(int sens, float angle)
+void tournerParEnArriere(int sens, float angle)
 {
   float distance,distancelu = 0;
   if (sens == 0)
@@ -172,9 +173,9 @@ void ligneDroite(float distance)
   ENCODER_Reset(1);
 }
 
-void ligneDroiteSC(float distance)
+void Avancer(float distance)
 {
-  //Pour aller en ligne droite sur une distance déterminée en mètre
+  //Pour aller en ligne droite sans que le crayon fasse des pointiller
   float borne = 0;
   borne = distance * 13367;
   float kp = 0.0005;
@@ -278,8 +279,8 @@ void courbe(float angle, float rayon, int sens)
 
 void petiteCourbe(float angle, float rayon, int sens)
 {
-  float kp = 0.0007;
-  float ki = 0.00009;
+  float kp = 0.0006;
+  float ki = 0.00006;
   float errorp;
   float errori;
   float speedright = 0.15;
@@ -338,8 +339,28 @@ void deplacer (char charByte)
       tournerParEnArriere(1,-80);
       delay(100);
       ligneDroite(0.30);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tournerParEnArriere(1,-80);
+      Avancer(0.45);
+      tourner(1,80);
+      Avancer(0.355);
+      tourner(1,80);
       delay(2000);
+      }
+      else
+      {
+      tournerParEnArriere(1,-80);
+      Avancer(0.45);
+      tourner(1,80);
+      Avancer(0.10);
+      tourner(1,80);
+      delay(2000);
+      }
       break;
+
     case 'Z':
       activerServo(Servo1, 125);
       delay(1000);
@@ -349,7 +370,7 @@ void deplacer (char charByte)
       delay(100);
       tourner(1, 115);
       delay(100);
-      ligneDroiteSC(0.03);
+      Avancer(0.03);
       delay(100);
       ligneDroite(0.50);
       delay(100);
@@ -357,8 +378,186 @@ void deplacer (char charByte)
       delay(100);
       ligneDroite(0.30);
       delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tournerParEnArriere(1,-25);
+      Avancer(0.20);
+      tourner(1,80);
+      Avancer(0.355);
+      tourner(1,80);
+      delay(2000);
+      }
+      else
+      {
+      tournerParEnArriere(1,-25);
+      Avancer(0.20);
+      tourner(1,80);
+      Avancer(0.10);
+      tourner(1,80);
+      delay(2000);
+      }
       break;
+
+    case 'C':
+      activerServo(Servo1, 125);
+      delay(1000);
+      virage(1, 90);
+      delay(100);
+      courbe(240, 4, 0);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tournerParEnArriere(1,-25);
+      Avancer(0.20);
+      tourner(1,80);
+      Avancer(0.355);
+      tourner(1,80);
+      delay(2000);
+      }
+      else
+      {
+      tournerParEnArriere(1,-25);
+      Avancer(0.20);
+      tourner(1,80);
+      Avancer(0.10);
+      tourner(1,80);
+      delay(2000);
+      }
+      break;
+
+    case 'U':
+      activerServo(Servo1, 125);
+      delay(1000);
+      ligneDroite(0.30);
+      delay(500);
+      petiteCourbe(180, 4, 0);
+      delay(500);
+      ligneDroite(0.40);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+       //code
+      }
+      else
+      {
+        //code
+      }
+      break;
+
+      case 'T':
+      activerServo(Servo1, 125);
+      delay(1000);
+      tournerParEnArriere(1,-80);
+      ligneDroite(0.26);
+      delay(100);
+      tourner(1,80);
+      delay(100);
+      Avancer(0.13);
+      delay(100);
+      tournerParEnArriere(1,-80);
+      delay(100);
+      ligneDroite(0.45);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tournerParEnArriere(1,-80);
+      Avancer(0.15);
+      tournerParEnArriere(1,-80);
+      Avancer(0.45);
+      tourner(1,80);
+      Avancer(0.355);
+      tourner(1,80);
+      }
+      else
+      {
+      tournerParEnArriere(1,-80);
+      Avancer(0.15);
+      tournerParEnArriere(1,-80);
+      Avancer(0.45);
+      tourner(1,80);
+      Avancer(0.10);
+      tourner(1,80);
+      }
+      break;
+
+    case 'D':
+      activerServo(Servo1, 125);
+      delay(1000);
+      ligneDroite(0.45);
+      delay(100);
+      tournerParEnArriere(1,-80);
+      delay(100);
+      courbe(240, 6, 0);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tourner(1,170);
+      Avancer(0.655);
+      tourner(1,80);
+      delay(2000);
+      }
+      else
+      {
+      tourner(1,170);
+      Avancer(0.185);
+      tourner(1,80);
+      delay(2000);
+      }
+      break;
+
+    case 'J':
+      activerServo(Servo1, 125);
+      delay(1000);
+      ligneDroite(0.30);
+      delay(100);
+      petiteCourbe(320, 7, 1);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+       //code
+      }
+      else
+      {
+        //code
+      }
+      break;
+
+    case 'V':
+      activerServo(Servo1, 125);
+      delay(1000); 
+      virage(0, 30);
+      delay(100);
+      ligneDroite(0.40);
+      delay(100);
+      tournerParEnArriere(1, -120);
+      delay(100);
+      ligneDroite(0.45);
+      delay(1000);
+      nbLettre++;
+      if (nbLettre < 2)
+      {
+      tourner(1,55);
+      Avancer(0.355);
+      tourner(1,79);
+      delay(2000);
+      }
+      else
+      {
+      tourner(1,55);
+      Avancer(0.10);
+      tourner(1,79);
+      delay(2000);
+      }
+      break;
+
     default:
+
       break;   
   }
 }
@@ -368,93 +567,17 @@ void loop()
   //VARIABLE
   // put your main code here, to run repeatedly:
 
+  activerServo(Servo1, 125);
+
+  if(nbLettre ==2)
+  {
+     //code
+  }
+  else
   if (Serial1.available() > 0) {
       // read the incoming byte:
       incomingByte = Serial1.readString();
       const char charByte = incomingByte[0];
       deplacer(charByte);
     }
-
-  //FONCTION POUR LA LETTRE L
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    ligneDroite(0.45);
-    delay(100);
-    tournerParEnArriere(1,-80);
-    delay(100);
-    ligneDroite(0.30);
-    delay(200000);*/
-
-  //FONCTION POUR LA LETTRE C
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    virage(1, 90);
-    delay(100);
-    courbe(240, 4, 0);
-    delay(10000);*/
-  
-
-  //FONCTION POUR LA LETTRE U
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    ligneDroite(0.30);
-    delay(500);
-    petiteCourbe(180, 4, 0);
-    delay(500);
-    ligneDroite(0.40);
-    delay(10000);*/
-
-    //FONCTION POUR LA LETTRE 0
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    courbe(390, 10, 0);
-    delay(10000);*/
-
-    //FONCTION POUR LA LETTRE D
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    ligneDroite(0.45);
-    delay(100);
-    tournerParEnArriere(1,-80);
-    delay(100);
-    courbe(230, 6, 0);
-    delay(10000);*/
-
-    //FONCTION POUR LA LETTRE J
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    ligneDroite(0.30);
-    delay(100);
-    petiteCourbe(320, 7, 1);
-    delay(10000);*/
-
-    //FONCTION POUR LA LETTRE z
-    /*activerServo(Servo1, 125);
-    delay(1000);
-    virage(0, 90);
-    delay(100);
-    ligneDroite(0.30);
-    delay(100);
-    tourner(1, 115);
-    delay(100);
-    ligneDroiteSC(0.03);
-    delay(100);
-    ligneDroite(0.50);
-    delay(100);
-    tournerParEnArriere(1, -116);
-    delay(100);
-    ligneDroite(0.30);
-    delay(10000);*/
-
-     //FONCTION POUR LA LETTRE V
-    /*activerServo(Servo1, 125);
-    delay(1000); 
-    virage(0, 30);
-    delay(100);
-    ligneDroite(0.40);
-    delay(100);
-    tournerParEnArriere(1, -120);
-    delay(100);
-    ligneDroite(0.45);
-    delay(1000000000);*/
 }
